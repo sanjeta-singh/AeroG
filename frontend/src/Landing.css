@@ -1,0 +1,130 @@
+.landing {
+  height: 100vh;
+  position: relative;
+  background-image: url('https://drawingcstorage.blob.core.windows.net/artwork-gallery/%E0%A4%86%E0%A4%B8%E0%A4%AE%E0%A4%BE%E0%A4%A8%20%E0%A4%AE%E0%A5%87%E0%A4%82%20%E0%A4%89%E0%A4%A1%E0%A4%BC%E0%A4%A4%E0%A4%BE%20%E0%A4%B5%E0%A4%BF%E0%A4%AE%E0%A4%BE%E0%A4%A8%20(4).png');
+  background-size: cover;
+  background-position: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.3	); /* Dark overlay */
+  z-index: 1;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 50px;
+  position: relative;
+  z-index: 2;
+  	
+}
+
+.nav-links a {
+  position: relative;
+  margin: 0 15px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.2s ease-in-out;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logo-icon {
+  margin-right: 10px;
+}
+.logo-img {
+  width: 42px;
+  height: 42px;
+  margin-right: 8px;
+}
+
+.brand-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.nav-links a {
+  margin: 0 15px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links .btn {
+  margin-left: 15px;
+  padding: 8px 16px;
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.nav-links .sign-up {
+  background: white ;
+  color: black;
+}
+
+.sign-in {
+  border: 2px solid white;
+  background: transparent;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.sign-in:hover {
+  background: white;
+  color: black;
+}
+
+
+.hero-text {
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  white-space: nowrap;
+  padding: 0 20px; /* optional: prevents overflow on small screens */
+}
+
