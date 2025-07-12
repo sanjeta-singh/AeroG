@@ -20,7 +20,10 @@ public class CsvToKafkaLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Path path = Path.of("C:\\Users\\Sanjay Singh\\AeroG\\scripts\\data-generators\\aircraft_data.csv");
+        String csvPath = System.getenv()
+                .getOrDefault("CSV_FILE_PATH",
+                        "C:\\Users\\Sanjay Singh\\AeroG\\scripts\\data-generators\\aircraft_data.csv");
+        Path path = Path.of(csvPath);
 
 
         List<String> lines = Files.readAllLines(path);
