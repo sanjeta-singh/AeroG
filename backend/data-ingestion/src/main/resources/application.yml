@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: xxx
+      uri: mongodb+srv://sanjeta:aerog%40123@aerog.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000
       database: AeroG
 
   kafka:
