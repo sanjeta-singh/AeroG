@@ -13,16 +13,32 @@ public class AlertEvaluatorService {
 
     public void evaluate(SensorData data) {
         System.out.println("Evaluating: " + data);
+
         if (data.getEngine_temp() > 1000) {
-            alertProducer.sendAlert("OVERHEAT: Engine temperature critical!");
+            alertProducer.sendAlert(
+                    data.getAircraft_id(),
+                    "OVERHEAT",
+                    "engine_temp",
+                    data.getEngine_temp(),
+                    1000.0);
         }
 
         if (data.getBrake_wear() > 0.7) {
-            alertProducer.sendAlert("BRAKE WEAR TOO HIGH");
+            alertProducer.sendAlert(
+                    data.getAircraft_id(),
+                    "BRAKE WEAR TOO HIGH",
+                    "brake_wear",
+                    data.getBrake_wear(),
+                    0.7);
         }
 
         if (data.getHydraulic_pressure() < 2500) {
-            alertProducer.sendAlert("LOW HYDRAULIC PRESSURE");
+            alertProducer.sendAlert(
+                    data.getAircraft_id(),
+                    "LOW HYDRAULIC PRESSURE",
+                    "hydraulic_pressure",
+                    data.getHydraulic_pressure(),
+                    2500.0);
         }
     }
 }

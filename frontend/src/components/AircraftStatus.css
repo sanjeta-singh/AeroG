@@ -1,0 +1,16 @@
+.container {
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.aircraft-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}

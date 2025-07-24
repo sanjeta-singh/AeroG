@@ -1,38 +1,44 @@
+# scripts/data-generators/send_flight_data.py
 import pandas as pd
 import time
-from kafka import KafkaProducer
 import json
+from kafka import KafkaProducer
 
-# Load the CSV
 csv_path = "aircraft_data.csv"
 df = pd.read_csv(csv_path)
 
-# Ensure headers match Java field names (optional cleanup)
+# keep original 9 columns
 df.columns = [
     "engine_temp", "brake_wear", "hydraulic_pressure",
     "flight_hours", "fuel_efficiency", "airspeed",
     "altitude", "outside_temp", "failure_label"
 ]
 
-# Initialize Kafka Producer
+# 501 unique tail numbers (non-repeating)
+TAIL_NUMBERS = [
+    f"{model}-{i:03d}"
+    for model in ["A320", "A330", "A350", "B737", "B777", "B787", "E190", "E195"]
+    for i in range(1, 64)
+][:501]
+
 try:
     producer = KafkaProducer(
-        bootstrap_servers='kafka:9092',
-        value_serializer=lambda v: json.dumps(v).encode('utf-8')
+       bootstrap_servers='kafka:9092',        value_serializer=lambda v: json.dumps(v).encode('utf-8')
     )
     print("Connected to Kafka broker at kafka:9092")
 except Exception as e:
-    print(f"Failed to connect to Kafka broker: {e}")
+    print(f"Failed to connect: {e}")
     exit(1)
 
-# Simulate streaming
 def simulate_aircraft_data():
-    for _, row in df.iterrows():
+    for idx, row in df.iterrows():
         data = row.to_dict()
+        data["aircraft_id"] = TAIL_NUMBERS[idx]
         print("Sending:", data)
         producer.send('aerog-data', value=data)
-        time.sleep(1)  # You can reduce this for faster testing
+        time.sleep(0.1)
 
-# Run
 if __name__ == "__main__":
     simulate_aircraft_data()
+    producer.flush()
+    print("All 501 rows sent with unique aircraft_id.")

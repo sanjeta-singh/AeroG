@@ -1,13 +1,12 @@
-/* Dashboard.css */
 .dashboard-container {
-  padding: 0;
-  margin: 0;
   display: flex;
   height: 100vh;
 }
+
 .main-panel {
-  margin-left: 200px; /* match sidebar width */
-  padding: 20px;
-  width: 100%;
+  flex: 1;
+  margin-left: 0;
+  padding: 1rem;
   background: #f8fafc;
+  transition: margin-left 0.3s ease;
 }
