@@ -1,0 +1,11 @@
+server:
+  port: 8087
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://sanjeta:aerog%40123@aerog.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000
+      database: AeroG
+
+#  mvn package -DskipTests
+#  java -jar target/bff-0.0.1-SNAPSHOT.jar

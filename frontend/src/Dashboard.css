@@ -5,8 +5,30 @@
 
 .main-panel {
   flex: 1;
-  margin-left: 0;
   padding: 1rem;
   background: #f8fafc;
-  transition: margin-left 0.3s ease;
+}
+
+.mini-panel {
+  margin-bottom: 2rem;
+}
+
+.mini-cards {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.main-panel h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.mini-cards-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }

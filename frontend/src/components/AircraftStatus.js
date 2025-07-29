@@ -8,7 +8,7 @@ const AircraftStatus = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8081/aircraft');
+        const response = await fetch('http://localhost:8087/aircraft');
         const data = await response.json();
         setAircraftData(data);
       } catch (error) {

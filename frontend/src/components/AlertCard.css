@@ -1,23 +1,29 @@
-.aircraft-card {
+.alert-card {
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
   margin: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #ebf293;
+  background-color: #ea2e2e;
   max-width: 300px;
+  font-family: Arial, sans-serif;
 }
 
-.aircraft-card h3 {
+.alert-card h3 {
   margin: 0 0 12px 0;
   font-size: 1.1rem;
-  color: #333;
+  color: #ffffff;
 }
 
-.aircraft-card p {
-  margin: 0 0 6px 0;
+.alert-card p {
+  margin: 0;
+  margin-bottom: 8px;
   font-size: 0.9rem;
-  color: #555;
+  color: #ffffff;
+}
+
+.alert-card p:last-child {
+  margin-bottom: 0;
 }
 
 .aircraft-card, .alert-card {
