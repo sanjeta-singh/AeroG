@@ -15,8 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class FlightData {
 
     @Id
-    private String id; // Auto-generated
-
+    private String aircraftId;
     private double engineTemp;
     private double brakeWear;
     private int hydraulicPressure;
