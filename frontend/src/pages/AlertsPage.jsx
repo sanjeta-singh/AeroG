@@ -2,16 +2,12 @@ import React, { useEffect, useState } from 'react';
 import AlertCard from '../components/AlertCard';
 import './AlertsPage.css';
 
-const WINDOW = 20;
-
 export default function AlertsPage() {
   const [data, setData] = useState([]);
   const [start, setStart] = useState(0);
 
   useEffect(() => {
-    fetch('http://localhost:8087/alerts')
-      .then(r => r.json())
-      .then(setData);
+    fetch('http://localhost:8087/alerts').then(r => r.json()).then(setData);
   }, []);
 
   useEffect(() => {
@@ -22,13 +18,13 @@ export default function AlertsPage() {
     return () => clearInterval(timer);
   }, [data]);
 
-  const visible = [...data, ...data].slice(start, start + WINDOW);
+  const visible = data.slice(start, start + 20);
   return (
     <>
       <h2 className="alerts">Alerts</h2>
       <div className="alert-grid">
-        {visible.map((a, i) => (
-          <AlertCard key={`${a._id}-${i}`} alert={a} />
+        {visible.map(a => (
+          <AlertCard key={a._id} alert={a} />
         ))}
       </div>
     </>

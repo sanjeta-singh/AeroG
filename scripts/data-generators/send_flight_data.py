@@ -7,19 +7,12 @@ from kafka import KafkaProducer
 csv_path = "aircraft_data.csv"
 df = pd.read_csv(csv_path)
 
-# keep original 9 columns
 df.columns = [
     "engine_temp", "brake_wear", "hydraulic_pressure",
     "flight_hours", "fuel_efficiency", "airspeed",
-    "altitude", "outside_temp", "failure_label"
+    "altitude", "outside_temp", "failure_label", "aircraft_id"
 ]
 
-# 501 unique tail numbers (non-repeating)
-TAIL_NUMBERS = [
-    f"{model}-{i:03d}"
-    for model in ["A320", "A330", "A350", "B737", "B777", "B787", "E190", "E195"]
-    for i in range(1, 64)
-][:501]
 
 try:
     producer = KafkaProducer(
@@ -33,7 +26,6 @@ except Exception as e:
 def simulate_aircraft_data():
     for idx, row in df.iterrows():
         data = row.to_dict()
-        data["aircraft_id"] = TAIL_NUMBERS[idx]
         print("Sending:", data)
         producer.send('aerog-data', value=data)
         time.sleep(0.1)
@@ -41,4 +33,4 @@ def simulate_aircraft_data():
 if __name__ == "__main__":
     simulate_aircraft_data()
     producer.flush()
-    print("All 501 rows sent with unique aircraft_id.")
+    

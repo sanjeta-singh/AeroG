@@ -30,3 +30,4 @@ public class BffController {
     public List<Alert> alerts() {
         return alertRepo.findAll();    // entire collection
     }
+}

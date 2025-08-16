@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AircraftCard from '../components/AircraftCard';
-import { TAIL_NUMBERS } from '../utils/tailNumbers';
 import './AircraftPage.css';
-
-const WINDOW = 20;
 
 export default function AircraftPage() {
   const [data, setData] = useState([]);
@@ -11,18 +8,10 @@ export default function AircraftPage() {
 
   // fetch once
   useEffect(() => {
-    fetch('http://localhost:8087/aircraft')
-      .then(r => r.json())
-      .then(raw =>
-        raw.map((d, i) => ({
-          ...d,
-          aircraftId: TAIL_NUMBERS[i % TAIL_NUMBERS.length]
-        }))
-      )
-      .then(setData);
+    fetch('http://localhost:8087/aircraft').then(r => r.json()).then(setData);
   }, []);
 
-  // slide window every second
+  // slide 20 cards every second
   useEffect(() => {
     if (!data.length) return;
     const timer = setInterval(() => {
@@ -31,13 +20,13 @@ export default function AircraftPage() {
     return () => clearInterval(timer);
   }, [data]);
 
-  const visible = [...data, ...data].slice(start, start + WINDOW);
+  const visible = data.slice(start, start + 20);
   return (
     <>
       <h2 className="aircraft">Aircraft</h2>
       <div className="aircraft-grid">
-        {visible.map((a, i) => (
-          <AircraftCard key={`${a._id}-${i}`} aircraft={a} />
+        {visible.map(a => (
+          <AircraftCard key={a._id} aircraft={a} />
         ))}
       </div>
     </>
