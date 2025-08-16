@@ -6,7 +6,6 @@ const AlertCard = ({ alert }) => (
     <h3>{alert.aircraftId}</h3>
     <p>{alert.type}</p>
     <p><strong>Threshold:</strong> {alert.threshold}</p>
-    <p><strong>Timestamp:</strong> {alert.timestamp}</p>
   </div>
 );
 

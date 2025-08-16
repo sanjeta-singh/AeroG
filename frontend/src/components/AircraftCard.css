@@ -1,25 +1,26 @@
 .aircraft-card {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
+  padding: 14px;
+  margin: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #ebf293;
-  max-width: 300px;
+  background-color: #fffeb3;
 }
 
 .aircraft-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.1rem;
-  color: #333;
+  margin: 0 0 16px 0;
 }
 
 .aircraft-card p {
-  margin: 0 0 6px 0;
-  font-size: 0.9rem;
-  color: #555;
+  margin: 0;
+  margin-bottom: 8px;
 }
 
-.aircraft-card, .alert-card {
-  will-change: transform;
+.aircraft-image {
+  display: block;
+  width: 100%;        /* use the full card width */
+  height: 90px;      /* fixed height—change as you like */
+  object-fit: cover;  /* keeps aspect ratio and crops overflow */
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 12px;
 }
