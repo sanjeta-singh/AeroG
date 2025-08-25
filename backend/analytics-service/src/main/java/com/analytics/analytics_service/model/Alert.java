@@ -16,4 +16,6 @@ public class Alert {
     private double value;
     private double threshold;
     private Instant timestamp;
+    private String urgency;
+    private String flightStatus;
 }

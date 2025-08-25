@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class SensorData {
-    // inside SensorData class
     private String aircraft_id;
     private double engine_temp;
     private double brake_wear;
@@ -15,4 +14,9 @@ public class SensorData {
     private int altitude;
     private int outside_temp;
     private String failure_label;
+
+    // NEW
+    private String timestamp;
+    private String flight_status;
+    private String location;
 }

@@ -14,17 +14,14 @@ const Landing = () => {
       <div className="overlay" />
       
       <header className="navbar">
-        <div className="logo">
-          <span className="logo-icon">
-            <img
-              src="/icon/airplane-travelling-around-earth-svgrepo-com.svg"
-              alt="Plane logo"
-              className="logo-img"
-            />
-          </span>
-          <span className="logo-text">AeroG</span>
-        </div>
-
+  <div className="logo">
+    <img
+      src="/icon/logo-white.png"
+      alt="AeroG Logo"
+      className="logo-img"
+    />
+  <span className="logo-text">AeroG</span>
+  </div>
         <nav className="nav-links">
           <a href="#">Services</a>
           <a href="#">About</a>

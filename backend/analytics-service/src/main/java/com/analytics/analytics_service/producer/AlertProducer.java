@@ -17,7 +17,9 @@ public class AlertProducer {
                           String type,
                           String parameter,
                           double value,
-                          double threshold) {
+                          double threshold,
+                          String urgency,
+                          String flightStatus) {
 
         Alert alert = new Alert();
         alert.setAircraftId(aircraftId);
@@ -26,6 +28,10 @@ public class AlertProducer {
         alert.setValue(value);
         alert.setThreshold(threshold);
         alert.setTimestamp(Instant.now());
+        alert.setUrgency(urgency);
+        alert.setFlightStatus(flightStatus);   // <-- new field
+
+
 
         repository.save(alert);
         System.out.println("Persisted alert: " + alert);

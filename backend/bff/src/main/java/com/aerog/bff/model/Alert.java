@@ -14,4 +14,6 @@ public class Alert {
     private int value;
     private int threshold;
     private String timestamp;
+    private String urgency;
+    private String flightStatus;
 }

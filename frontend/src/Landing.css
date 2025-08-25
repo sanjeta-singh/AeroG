@@ -61,8 +61,8 @@
   margin-right: 10px;
 }
 .logo-img {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   margin-right: 8px;
 }
 
@@ -127,4 +127,7 @@
   white-space: nowrap;
   padding: 0 20px; /* optional: prevents overflow on small screens */
 }
+
+
+
 
