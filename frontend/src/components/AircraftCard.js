@@ -1,39 +1,29 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './AircraftCard.css';
 
 const AircraftCard = ({ aircraft }) => {
-  // Map models to multiple images (based on your actual files)
+  /* 1.  same image map  */
   const aircraftImages = {
     A320: ["/aircrafts/A320.1.png", "/aircrafts/A320.2.png"],
     A350: ["/aircrafts/A350.1.png", "/aircrafts/A350.2.png"],
     B737: ["/aircrafts/B737.1.png", "/aircrafts/B737.2.png"],
-    CRJ700: ["/aircrafts/crj7.1.png", "/aircrafts/crj7.2.png"], // lowercase in filenames
+    CRJ700: ["/aircrafts/crj7.1.png", "/aircrafts/crj7.2.png"],
     E190: ["/aircrafts/E190.1.png", "/aircrafts/E190.2.png"],
   };
 
-  // Extract model part from aircraftId (e.g. "A320-001" → "A320")
-  const model = aircraft.aircraftId.split("-")[0];
+  /* 2.  stable key for this aircraft  */
+  const model = aircraft.aircraftId.split("-")[0].toUpperCase();
+  const key   = model === "CRJ700" ? "CRJ700" : model;
 
-  // Normalize CRJ700 because your files are named "crj7"
-  let key = model.toUpperCase();
-  if (key === "CRJ700") key = "CRJ700";
-
-  // Get images for the aircraft model
-  const images = aircraftImages[key] || ["/aircrafts/default.png"];
-
-  // Pick a random image each render
-  const aircraftImage = images[Math.floor(Math.random() * images.length)];
+  /* 3.  pick image ONLY when aircraft row changes  */
+  const aircraftImage = useMemo(() => {
+    const imgs = aircraftImages[key] || ["/aircrafts/default.png"];
+    return imgs[Math.floor(Math.random() * imgs.length)];
+  }, [key, aircraft._id]); // <-- only recalculate when row changes
 
   return (
     <div className="aircraft-card">
-      {/* Aircraft image */}
-      <img 
-        src={aircraftImage} 
-        alt={aircraft.aircraftId} 
-        className="aircraft-image"
-      />
-
-      {/* Aircraft details */}
+      <img src={aircraftImage} alt={aircraft.aircraftId} className="aircraft-image" />
       <h3>{aircraft.aircraftId}</h3>
       <p>Engine Temp: {aircraft.engineTemp}°C</p>
       <p>Brake Wear: {aircraft.brakeWear}</p>

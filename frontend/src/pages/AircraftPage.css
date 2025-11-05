@@ -1,28 +1,140 @@
-.aircraft-grid, .alert-grid {
+.aircraft-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #f9fafb;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.aircraft-header {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
 }
 
-.aircraft-grid > *, .alert-grid > * {
-  animation: fadeIn 0.4s ease-in-out;
+.search-section {
+  flex: 1;
+  max-width: 400px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.aircraft-cards {
+.search-container {
+  position: relative;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 20px;
+  align-items: center;
 }
 
-.aircraft{
-  text-align: center;
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #9ca3af;
+  width: 16px;
+  height: 16px;
+  z-index: 2;
+}
+
+.search-icon::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+}
+
+.search-icon::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 6px;
+  background: currentColor;
+  transform: rotate(45deg);
+  top: 10px;
+  left: 12px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 12px 12px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.filter-section {
+  margin-left: 20px;
+}
+
+.model-filter {
+  padding: 12px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.model-filter:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.model-filter:hover {
+  border-color: #9ca3af;
+}
+
+/* Aircraft Cards Vertical Stack */
+.aircraft-vertical-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .aircraft-page {
+    padding: 16px;
+  }
+  
+  .aircraft-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+    padding: 20px;
+  }
+  
+  .search-section {
+    max-width: none;
+  }
+  
+  .filter-section {
+    margin-left: 0;
+  }
+  
+  .aircraft-vertical-stack {
+    gap: 12px;
+  }
 }

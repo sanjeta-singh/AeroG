@@ -1,34 +1,469 @@
 .dashboard-container {
   display: flex;
   height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
 .main-panel {
   flex: 1;
-  padding: 1rem;
-  background: #f8fafc;
-}
-
-.mini-panel {
-  margin-bottom: 2rem;
-}
-
-.mini-cards {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  padding: 1.5rem;
+  background: #f1f5f9;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
 }
 
 .main-panel h2 {
   text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 10px 0 25px 0;
+  color: #1e293b;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  letter-spacing: -0.5px;
 }
 
-.mini-cards-row {
+/* New Layout Container */
+.dashboard-layout {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 120px);
+}
+
+/* Left Column - Summary + Aircraft */
+.left-column {
+  flex: 1.8;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Summary Bar - Enhanced with modern cards */
+.summary-bar {
+  display: flex;
+  gap: 16px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  justify-content: space-between;
+}
+
+.summary-card {
+  flex: 1;
+  text-align: center;
+  padding: 20px 12px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+.summary-card:hover::before {
+  opacity: 1;
+}
+
+.summary-card.critical {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.summary-card.critical::before {
+  background: linear-gradient(90deg, #ef4444, #dc2626);
+}
+
+.summary-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.summary-card.critical .summary-number {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.summary-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* Aircraft Section */
+.aircraft-section {
+  flex: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  overflow: visible;
+}
+
+.aircraft-section h3 {
+  margin: 0 0 20px 0;
+  color: #1e293b;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-bottom: 3px solid #10b981;
+  padding-bottom: 12px;
+  position: relative;
+}
+
+.aircraft-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 2px;
+}
+
+.aircraft-grid {
   display: flex;
   flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+}
+
+.aircraft-card {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid #d1fae5;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+  background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+}
+
+.aircraft-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.aircraft-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Right Column - Alerts + Services stacked vertically */
+.right-column {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
+}
+
+/* Alerts Section - Top right */
+.alerts-section {
+  flex: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 16px 18px;  /* reduced from 24px → tighter fit */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Title spacing */
+.alerts-section h3 {
+  margin: 0 0 12px 0;  /* was 20px → reduced */
+  color: #1e293b;
+  font-size: 1.3rem;
+  font-weight: 700;
+  border-bottom: 2px solid #f59e0b; /* slightly thinner */
+  padding-bottom: 8px; /* reduced */
+  flex-shrink: 0;
+}
+
+.alerts-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+  border-radius: 2px;
+}
+
+.alerts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* was 12px → smaller gaps between alerts */
+  flex: 1;
+  min-height: 0;
+  justify-content: flex-start; /* ensure alerts use top space */
+  padding-bottom: 4px; /* small breathing room */
+}
+
+/* Alert cards - Enhanced design */
+.alert-card {
+  border: 1px solid #fed7aa;
+  border-radius: 12px;        /* smaller radius */
+  padding: 8px 12px;          /* reduced padding */
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(251, 146, 60, 0.12);
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  transition: all 0.3s ease;
+  min-height: 50px;           /* smaller card height */
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.alert-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.alert-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(251, 146, 60, 0.25);
+  border-color: #f59e0b;
+}
+
+.alert-card h3 {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;          /* smaller heading */
+  color: #92400e;
+  font-weight: 600;
+}
+
+.alert-card p {
+  margin: 0 0 2px 0;
+  font-size: 0.75rem;         /* smaller text */
+  color: #a16207;
+  line-height: 1.2;
+}
+
+/* Services Section - Bottom right */
+.services-section {
+  flex: 1;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.services-section h3 {
+  margin: 0 0 20px 0;
+  color: #1e293b;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border-bottom: 3px solid #8b5cf6;
+  padding-bottom: 12px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.services-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+  border-radius: 2px;
+}
+
+.services-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  color: #94a3b8;
+  font-style: italic;
+  min-height: 0;
+  font-size: 1rem;
+}
+
+/* Enhanced Aircraft Card Styles */
+.aircraft-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+}
+
+.aircraft-card h3 {
+  margin: 0 0 12px 0;
+  color: #065f46;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.aircraft-card p {
+  margin: 0 0 6px 0;
+  font-size: 0.85rem;
+  color: #047857;
+  line-height: 1.4;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.aircraft-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.alert-card {
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.summary-card {
+  animation: fadeInScale 0.4s ease-out;
+}
+
+/* Enhanced focus states for accessibility */
+.summary-card:focus,
+.aircraft-card:focus,
+.alert-card:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-layout {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .left-column, .right-column {
+    flex: none;
+  }
+  
+  .aircraft-grid {
+    flex-direction: column;
+  }
+  
+  .aircraft-grid .aircraft-card {
+    flex: none;
+  }
+  
+  .right-column {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .alerts-section, .services-section {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-panel {
+    padding: 1rem;
+  }
+  
+  .dashboard-layout {
+    gap: 15px;
+  }
+  
+  .summary-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .aircraft-grid {
+    flex-direction: column;
+  }
+  
+  .aircraft-grid .aircraft-card {
+    flex: none;
+  }
+  
+  .right-column {
+    flex-direction: column;
+  }
+  
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  
+  .aircraft-section,
+  .alerts-section,
+  .services-section {
+    padding: 20px;
+  }
 }

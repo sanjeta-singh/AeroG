@@ -57,9 +57,9 @@ public class AlertEvaluatorService {
 
             double value = switch (code) {
                 case "ENGINE_OVERHEAT"   -> d.getEngine_temp();
-                case "BRAKE_CRITICAL"    -> d.getBrake_wear();
+                case "BRAKE_CRITICAL"    -> (d.getBrake_wear() > 1 ? d.getBrake_wear() / 100.0 : d.getBrake_wear());
                 case "HYDRAULIC_FAILURE" -> d.getHydraulic_pressure();
-                case "FUEL_INEFFICIENCY" -> d.getFuel_efficiency();
+                case "FUEL_INEFFICIENCY" -> (d.getFuel_efficiency() > 1 ? d.getFuel_efficiency() / 100.0 : d.getFuel_efficiency());
                 case "MAINT_DUE"         -> d.getFlight_hours();
                 default -> 0.0;
             };
@@ -70,8 +70,9 @@ public class AlertEvaluatorService {
                     parameter,
                     value,
                     threshold,
-                    urgency,           // <- 6th
-                    d.getFlight_status() // <- 7th
+                    urgency,
+                    d.getFlight_status(),
+                    d.getTimestamp()          // <-- add this
             );
         }
     }

@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 10 bash -c '</dev/tcp/localhost/9092'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  ingestion-service:
+    build:
+      context: ./backend/data-ingestion
+      dockerfile: Dockerfile
+    container_name: ingestion-service
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      CSV_FILE_PATH: /data/aircraft_data.csv
+    volumes:
+      - ./scripts/data-generators/aircraft_data.csv:/data/aircraft_data.csv:ro
+    ports:
+      - "8081:8081"
+
+  analytics-service:
+    build:
+      context: ./backend/analytics-service
+      dockerfile: Dockerfile
+    container_name: analytics-service
+    depends_on:
+      - kafka
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092   # <-- fix
+      SPRING_KAFKA_CONSUMER_AUTO_OFFSET_RESET: latest   # ← change from earliest
+      SPRING_KAFKA_CONSUMER_GROUP_ID: aerog-analytics-v2 # ← new group → no old 
+      SPRING_DATA_MONGODB_URI: "mongodb+srv://sanjeta:aerog%40123@aerog.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000"
+    ports:
+      - "8082:8082"
+
+  csv-producer:
+    build:
+      context: ./scripts/data-generators
+      dockerfile: Dockerfile-producer
+    container_name: csv-producer
+    depends_on:
+      kafka:
+        condition: service_healthy
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      TOPIC: aerog-data
+    command: ["python3", "send_flight_data.py"]

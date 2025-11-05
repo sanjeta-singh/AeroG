@@ -1,6 +1,7 @@
 package com.dataingestion.data_ingestion.kafka;
 
-import java.util.Arrays;
+import com.fasterxml.jackson.databind.JsonNode;          // NEW
+import com.fasterxml.jackson.databind.ObjectMapper;     // NEW
 import com.dataingestion.data_ingestion.model.FlightData;
 import com.dataingestion.data_ingestion.repository.FlightDataRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -14,57 +15,39 @@ public class KafkaFlightDataConsumer {
     @Autowired
     private FlightDataRepository flightDataRepository;
 
+    private final ObjectMapper mapper = new ObjectMapper();   // NEW
+
     @KafkaListener(topics = "aerog-data", groupId = "aerog")
-    public void listen(ConsumerRecord<String, String> record) {
-        try {
-            String line = record.value().trim();
-            System.out.println("Received: " + line);
+public void listen(ConsumerRecord<String, String> record) {
+    try {
+        JsonNode root = mapper.readTree(record.value());
 
-            // Split the line into parts (keep it like your working version)
-            String[] parts = record.value().trim().split(",", -1);
-            System.out.println("parts.length = " + parts.length);
-            System.out.println("parts = " + Arrays.toString(parts));
-
-            // Skip header line if it sneaks in
-            if (parts[0].trim().equalsIgnoreCase("engine_temp")) {
-                System.out.println("Header row detected — skipping.");
-                return;
-            }
-
-            // Expect exactly 13 fields as per your schema
-            // engine_temp, brake_wear, hydra   ulic_pressure, flight_hours,
-            // fuel_efficiency, airspeed, altitude, outside_temp,
-            // failure_label, aircraftID, timestamp, flight_status, location
-            if (parts.length != 13) {
-                System.err.println("Invalid message length: " + parts.length + " - " + Arrays.toString(parts));
-                return;
-            }
-
-            // Map exactly by your specified indexing
-            FlightData data = FlightData.builder()
-                    .id(null)
-                    .engineTemp(Double.parseDouble(parts[0].trim()))
-                    .brakeWear(Double.parseDouble(parts[1].trim()))
-                    .hydraulicPressure(Integer.parseInt(parts[2].trim()))
-                    .flightHours(Integer.parseInt(parts[3].trim()))
-                    .fuelEfficiency(Double.parseDouble(parts[4].trim()))
-                    .airspeed(Integer.parseInt(parts[5].trim()))
-                    .altitude(Integer.parseInt(parts[6].trim()))
-                    .outsideTemp(Integer.parseInt(parts[7].trim()))
-                    .failureLabel(parts[8].trim())
-                    .aircraftId(parts[9].trim())
-                    .timestamp(parts[10].trim())
-                    .flightStatus(parts[11].trim())
-                    .location(parts[12].trim())
-                    .build();
-
-            System.out.println("Saving to MongoDB...");
-            System.out.println("Repo count (before insert): " + flightDataRepository.count());
-            flightDataRepository.save(data);
-            System.out.println("Saved successfully");
-
-        } catch (Exception e) {
-            e.printStackTrace(); // Shows full error in terminal
+        if (root.get("aircraft_id") == null || root.get("timestamp") == null) {
+            System.out.println("Skipping record due to missing aircraft_id/timestamp: " + record.value());
+            return;
         }
+
+        FlightData data = FlightData.builder()
+                .id(null)
+                .engineTemp(root.get("engine_temp").asDouble())
+                .brakeWear(root.get("brake_wear").asDouble())
+                .hydraulicPressure(root.get("hydraulic_pressure").asInt())
+                .flightHours(root.get("flight_hours").asInt())
+                .fuelEfficiency(root.get("fuel_efficiency").asDouble())
+                .airspeed(root.get("airspeed").asInt())
+                .altitude(root.get("altitude").asInt())
+                .outsideTemp(root.get("outside_temp").asInt())
+                .failureLabel(root.get("failure_label").asText())
+                .aircraftId(root.get("aircraft_id").asText())
+                .timestamp(root.get("timestamp").asText())
+                .flightStatus(root.get("flight_status").asText())
+                .location(root.get("location").asText())
+                .build();
+
+        flightDataRepository.save(data);
+        System.out.println("Saved telemetry for aircraft " + data.getAircraftId());
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
 }
