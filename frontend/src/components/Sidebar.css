@@ -30,7 +30,13 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+}
+
+/* ensure icon and text inside link have spacing */
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* more space between icon and text */
 }
 
 .sidebar__toggle {

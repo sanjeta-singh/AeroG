@@ -21,8 +21,17 @@ const AircraftCard = ({ aircraft }) => {
     return imgs[Math.floor(Math.random() * imgs.length)];
   }, [key, aircraft._id]); // <-- only recalculate when row changes
 
+  /* 4.  status modifier for styling */
+  const statusClass = useMemo(() => {
+    const s = String(aircraft?.flightStatus || '').toLowerCase();
+    if (s.includes('flight')) return 'ac--inflight';
+    if (s.includes('ground')) return 'ac--grounded';
+    if (s.includes('maint')) return 'ac--maintenance';
+    return 'ac--info';
+  }, [aircraft?.flightStatus]);
+
   return (
-    <div className="aircraft-card">
+    <div className={`aircraft-card ${statusClass}`}>
       <img src={aircraftImage} alt={aircraft.aircraftId} className="aircraft-image" />
       <h3>{aircraft.aircraftId}</h3>
       <p>Engine Temp: {aircraft.engineTemp}°C</p>

@@ -1,31 +1,105 @@
 .alert-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #ea2e2e;
-  max-width: 300px;
-  font-family: Arial, sans-serif;
+  position: relative;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px 16px 22px; /* bigger */
+  margin: 0;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
+  background: #ffffff;
+  max-width: 100%;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  min-height: 110px; /* taller cards for clarity */
+}
+
+.alert-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #38bdf8, #0ea5e9); /* info default */
+}
+
+.alert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.10);
+}
+
+.alert-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .alert-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.1rem;
-  color: #ffffff;
-}
-
-.alert-card p {
   margin: 0;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-  color: #ffffff;
+  font-size: 1.35rem; /* more prominent */
+  color: #0a3a5f; /* navy */
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.1;
 }
 
-.alert-card p:last-child {
-  margin-bottom: 0;
+/* keep title navy regardless of severity for clarity */
+.alert--critical h3,
+.alert--warning h3,
+.alert--info h3 { color: #0a3a5f; }
+
+.alert-meta {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.alert-badge.urgency {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #0b1220;
+  background: #e0f2fe;
+}
+
+.alert--critical .alert-badge.urgency {
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+.alert--warning .alert-badge.urgency {
+  color: #7c2d12;
+  background: #ffedd5;
+}
+
+.alert-chip {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #0b1220;
+  background: #f1f5f9;
+}
+
+/* Severity modifiers */
+.alert--critical::before {
+  background: linear-gradient(180deg, #ef4444, #b91c1c);
+}
+
+.alert--warning::before {
+  background: linear-gradient(180deg, #f59e0b, #b45309);
+}
+
+.alert--info::before {
+  background: linear-gradient(180deg, #38bdf8, #0ea5e9);
 }
 
 .aircraft-card, .alert-card {
   will-change: transform;
 }
+
+.alert-card.clickable { cursor: pointer; }
+.alert-card.clickable:focus { outline: 2px solid #0a3a5f; outline-offset: 2px; }

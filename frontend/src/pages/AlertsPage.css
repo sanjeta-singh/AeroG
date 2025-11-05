@@ -1,19 +1,61 @@
-.aircraft-grid, .alert-grid {
+.alerts-page { padding: 20px; }
+.alerts-title { text-align: center; margin: 0 0 16px 0; }
+
+.alerts-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.alerts-col {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.06);
+}
+
+.col-title {
+  margin: 0 0 12px 0;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+.col-title.emergency { color: #991b1b; }
+.col-title.advisory  { color: #0a3a5f; }
+
+.col-list { display: flex; flex-direction: column; gap: 10px; }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2,6,23,0.5);
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
-
-.aircraft-grid > *, .alert-grid > * {
-  animation: fadeIn 0.4s ease-in-out;
+.modal {
+  width: min(520px, 92vw);
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 48px rgba(2,6,23,0.25);
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #e2e8f0;
 }
-
-.alerts{
-  text-align: center;
+.modal-header h4 {
+  margin: 0; font-size: 1.2rem; font-weight: 800; color: #0a3a5f;
 }
+.modal-close {
+  border: none; background: transparent; font-size: 22px; cursor: pointer; line-height: 1;
+}
+.modal-body { padding: 14px 16px; display: grid; gap: 10px; }
+.modal-row { display: flex; align-items: center; justify-content: space-between; }
+.modal-row span { color: #64748b; font-size: 0.95rem; }
+.modal-row strong { color: #0f172a; font-size: 1rem; }

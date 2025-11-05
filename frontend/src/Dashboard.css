@@ -6,8 +6,8 @@
 
 .main-panel {
   flex: 1;
-  padding: 1.5rem;
-  background: #f1f5f9;
+  padding: 1.25rem;
+  background: #eef2f7;
   overflow-y: auto;
   transition: margin-left 0.3s ease;
 }
@@ -31,7 +31,7 @@
 
 /* Left Column - Summary + Aircraft */
 .left-column {
-  flex: 1.8;
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -40,22 +40,23 @@
 /* Summary Bar - Enhanced with modern cards */
 .summary-bar {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   padding: 0;
   background: transparent;
   border-radius: 0;
   box-shadow: none;
   justify-content: space-between;
+  margin-bottom: 14px; /* space from cards */
 }
 
 .summary-card {
   flex: 1;
   text-align: center;
-  padding: 20px 12px;
-  border-radius: 16px;
+  padding: 14px 10px; /* slightly smaller */
+  border-radius: 14px;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border: 1px solid #e2e8f0;
-  color: #1e293b;
+  color: #0f172a;
   transition: all 0.3s ease;
   min-width: 100px;
   position: relative;
@@ -95,10 +96,10 @@
 }
 
 .summary-number {
-  font-size: 2.2rem;
+  font-size: 1.8rem; /* a little smaller */
   font-weight: 800;
-  margin-bottom: 4px;
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  margin-bottom: 2px;
+  background: linear-gradient(135deg, #0ea5e9, #14b8a6); /* navy/teal vibe */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -112,10 +113,10 @@
 }
 
 .summary-label {
-  font-size: 0.75rem;
-  opacity: 0.7;
+  font-size: 0.72rem;
+  opacity: 0.75;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   font-weight: 600;
 }
 
@@ -124,76 +125,37 @@
   flex: 1;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 20px;
-  padding: 24px;
+  padding: 16px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
   overflow: visible;
 }
 
 .aircraft-section h3 {
-  margin: 0 0 20px 0;
-  color: #1e293b;
-  font-size: 1.4rem;
+  margin: 0 0 16px 0;
+  color: #0f172a;
+  font-size: 1.3rem;
   font-weight: 700;
-  border-bottom: 3px solid #10b981;
-  padding-bottom: 12px;
+  padding-bottom: 8px;
   position: relative;
 }
 
 .aircraft-section h3::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(90deg, #10b981, #059669);
-  border-radius: 2px;
+  display: none;
 }
 
 .aircraft-grid {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* force 3 columns */
   gap: 16px;
-  justify-content: flex-start;
-  align-items: stretch;
   width: 100%;
+  align-items: stretch;
 }
 
-.aircraft-card {
-  flex: 1 1 0;
-  min-width: 0;
-  border: 1px solid #d1fae5;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
-  background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  min-height: 280px;
-}
-
-.aircraft-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #10b981, #059669);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.aircraft-card:hover::before {
-  transform: scaleX(1);
-}
 
 /* Right Column - Alerts + Services stacked vertically */
 .right-column {
-  flex: 1.2;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -204,7 +166,7 @@
   flex: 1;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 20px;
-  padding: 16px 18px;  /* reduced from 24px → tighter fit */
+  padding: 20px 22px; /* larger to feel more substantial */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
   display: flex;
@@ -214,81 +176,29 @@
 
 /* Title spacing */
 .alerts-section h3 {
-  margin: 0 0 12px 0;  /* was 20px → reduced */
-  color: #1e293b;
-  font-size: 1.3rem;
+  margin: 0 0 10px 0;
+  color: #0f172a;
+  font-size: 1.2rem;
   font-weight: 700;
-  border-bottom: 2px solid #f59e0b; /* slightly thinner */
-  padding-bottom: 8px; /* reduced */
+  padding-bottom: 6px;
+  position: relative;
   flex-shrink: 0;
 }
 
 .alerts-section h3::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(90deg, #f59e0b, #d97706);
-  border-radius: 2px;
+  display: none;
 }
 
 .alerts-container {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* was 12px → smaller gaps between alerts */
+  gap: 12px; /* clearer spacing between alerts */
   flex: 1;
   min-height: 0;
-  justify-content: flex-start; /* ensure alerts use top space */
-  padding-bottom: 4px; /* small breathing room */
+  justify-content: flex-start;
+  padding-bottom: 6px;
 }
 
-/* Alert cards - Enhanced design */
-.alert-card {
-  border: 1px solid #fed7aa;
-  border-radius: 12px;        /* smaller radius */
-  padding: 8px 12px;          /* reduced padding */
-  margin: 0;
-  box-shadow: 0 2px 8px rgba(251, 146, 60, 0.12);
-  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-  transition: all 0.3s ease;
-  min-height: 50px;           /* smaller card height */
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-
-.alert-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #f59e0b, #d97706);
-}
-
-.alert-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(251, 146, 60, 0.25);
-  border-color: #f59e0b;
-}
-
-.alert-card h3 {
-  margin: 0 0 4px 0;
-  font-size: 0.9rem;          /* smaller heading */
-  color: #92400e;
-  font-weight: 600;
-}
-
-.alert-card p {
-  margin: 0 0 2px 0;
-  font-size: 0.75rem;         /* smaller text */
-  color: #a16207;
-  line-height: 1.2;
-}
 
 /* Services Section - Bottom right */
 .services-section {
@@ -338,26 +248,6 @@
   font-size: 1rem;
 }
 
-/* Enhanced Aircraft Card Styles */
-.aircraft-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.2);
-  border-color: #10b981;
-}
-
-.aircraft-card h3 {
-  margin: 0 0 12px 0;
-  color: #065f46;
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.aircraft-card p {
-  margin: 0 0 6px 0;
-  font-size: 0.85rem;
-  color: #047857;
-  line-height: 1.4;
-}
 
 /* Animations */
 @keyframes slideInUp {

@@ -23,11 +23,11 @@ public class BffController {
 
     @GetMapping("/aircraft")
     public List<FlightData> aircraft() {
-        return flightRepo.findAll();   // entire collection
+        return flightRepo.findAll();
     }
 
     @GetMapping("/alerts")
     public List<Alert> alerts() {
-        return alertRepo.findAll();    // entire collection
+        return alertRepo.findAll();
     }
 }
