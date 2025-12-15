@@ -5,7 +5,7 @@ AeroG is a microservices-based application designed to monitor and analyze aircr
 
 ## Workflow & Architecture
 
-![AeroG Architecture](docs/Telemetry%20Producer%20Kafka-2025-12-15-080824.png)
+![AeroG Architecture](docs/Telemetry%20Producer%20Kafka-2025-12-15-080828.png)
 The project follows an event-driven architecture with the following data flow:
 
 1.  **Core Infrastructure (Kafka & Zookeeper)**:
