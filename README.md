@@ -86,6 +86,6 @@ npm start
 ```
 
 ## Architecture Note: Why are these separate?
-You might notice that `pipeline-compose.yml` only includes the data processing layer. This is intentional:
+You will notice that `pipeline-compose.yml` only includes the data processing layer. This is intentional:
 *   **Pipeline Scope**: `pipeline-compose.yml` is dedicated to the "Always-On" **Data Pipeline** (Ingestion -> Kafka -> Processing -> Storage). These services form the stable backbone of the system.
 *   **Development Cycle**: The **Frontend** and **BFF** are user-facing components that often require frequent updates, hot-reloading (for React), and different scaling strategies. Keeping them separate allows developers to iterate on the UI without restarting the heavy Kafka infrastructure.
